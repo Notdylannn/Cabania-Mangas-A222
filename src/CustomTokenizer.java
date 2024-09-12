@@ -7,16 +7,16 @@ public class CustomTokenizer {
 
     // Classify token
     public static String classifyToken(String token) {
-        if (token.matches(" ")) {  // Match only space character
+        if (token.matches(" ")) {
             return "Space";
-        } else if (token.matches("\\t")) {  // Match tab character
+        } else if (token.matches("\\t")) {
             return "Tab";
-        } else if (token.matches("\\R")) {  // Match different newline characters
+        } else if (token.matches("\\R")) {
             return "End of Line";
         } else {
             token = token.trim();  // Trim spaces around the token for proper classification
-
-            if (token.matches("[a-zA-Z]+")) {
+    
+            if (token.matches("[a-zA-Z]+([']?[a-zA-Z]+)?")) {
                 return "Word";
             } else if (token.matches("\\d+(\\.\\d+)?")) {
                 return "Number";
@@ -24,8 +24,8 @@ public class CustomTokenizer {
                 return "Alphanumeric";
             } else if (token.matches("\\p{Punct}+")) {
                 return "Punctuation";
-            } else if (token.matches("[a-zA-Z0-9\\s]+") && token.contains(" ")) {
-                return "Sentence";  // Classify multi-word tokens as Sentence
+            } else if (token.matches("[a-zA-Z0-9\\s\\p{Punct}]+") && token.contains(" ")) {
+                return "Sentence";
             } else {
                 return "Unknown";
             }
